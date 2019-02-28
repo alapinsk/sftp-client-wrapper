@@ -130,7 +130,7 @@ public class SFTPClient {
         for (int i = 0, size = ls.size(); i < size; i++) {
             LsEntry entry = (LsEntry) ls.get(i);
             int modTime = entry.getAttrs().getMTime();
-            if (latestModTime < modTime) {
+            if (!entry.getAttrs().isDir() && latestModTime < modTime) {
                 latestModTime = modTime;
                 fileName = entry.getFilename();
             }

@@ -115,6 +115,10 @@ public class SFTPClient {
     private String getLatestSource(ChannelSftp sftpChannel, String source) throws Exception {
         Vector ls = sftpChannel.ls(source);
 
+        if (!source.endsWith("/") && ls.size() > 1) {
+            source = source + "/";
+        }
+
         String basePath = FilenameUtils.getPath(source);
         if (!basePath.startsWith("/")) {
             basePath = "/" + basePath;
@@ -132,7 +136,7 @@ public class SFTPClient {
             }
         }
 
-        return FilenameUtils.concat(basePath, fileName);
+        return basePath.concat(fileName);
     }
 
     private String getLatestLocalSource(String source) throws Exception {
